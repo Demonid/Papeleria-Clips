@@ -33,6 +33,15 @@ createApp({
         id: null,
         nombre: ''
       },
+      formProducto: {
+        id: null,
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        existencias: '',
+        imagen: '',
+        categoria_id: ''
+      },
       pedidoConfirmado: null,
       misPedidos: [],
       pedidoDetalleVisible: null,
@@ -255,6 +264,60 @@ createApp({
         }
       } catch (error) {
         this.mensajeError = 'Error al eliminar la categoría';
+      }
+    },
+    editarProducto(prod) {
+      this.formProducto = {
+        id: prod.id,
+        nombre: prod.nombre,
+        descripcion: prod.descripcion,
+        precio: prod.precio,
+        existencias: prod.existencias,
+        imagen: prod.imagen,
+        categoria_id: prod.categoria_id
+      };
+    },
+    limpiarFormularioProducto() {
+      this.formProducto = {
+        id: null,
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        existencias: '',
+        imagen: '',
+        categoria_id: ''
+      };
+    },
+    async guardarProducto() {
+      try {
+        const esEdicion = Boolean(this.formProducto.id);
+        const url = esEdicion ? `/api/productos/${this.formProducto.id}` : '/api/productos';
+        const metodo = esEdicion ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+          method: metodo,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.formProducto)
+        });
+
+        if (res.ok) {
+          this.limpiarFormularioProducto();
+          await this.cargarProductosIniciales();
+          this.mostrarAlerta(esEdicion ? 'Producto actualizado.' : 'Producto agregado.');
+        }
+      } catch (error) {
+        this.mensajeError = 'Error al guardar el producto';
+      }
+    },
+    async eliminarProducto(id) {
+      try {
+        const res = await fetch(`/api/productos/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          await this.cargarProductosIniciales();
+          this.mostrarAlerta('Producto eliminado.');
+        }
+      } catch (error) {
+        this.mensajeError = 'Error al eliminar el producto';
       }
     },
     async iniciarSesion() {

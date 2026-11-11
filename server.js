@@ -147,6 +147,57 @@ app.get('/api/productos/:id', (req, res) => {
   });
 });
 
+// Crear nuevo producto
+app.post('/api/productos', (req, res) => {
+  const { nombre, descripcion, precio, existencias, imagen, categoria_id } = req.body;
+  const imgFinal = imagen && imagen.trim() !== ''
+    ? imagen.trim()
+    : `https://placehold.co/400x280/e3f2fd/1565c0?text=${encodeURIComponent(nombre)}`;
+
+  const sql = `
+    INSERT INTO productos (nombre, descripcion, precio, existencias, imagen, categoria_id)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  db.run(sql, [nombre, descripcion || '', Number(precio), Number(existencias), imgFinal, Number(categoria_id)], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al crear producto' });
+    }
+    res.json({ id: this.lastID });
+  });
+});
+
+// Actualizar producto existente
+app.put('/api/productos/:id', (req, res) => {
+  const { nombre, descripcion, precio, existencias, imagen, categoria_id } = req.body;
+  const imgFinal = imagen && imagen.trim() !== ''
+    ? imagen.trim()
+    : `https://placehold.co/400x280/e3f2fd/1565c0?text=${encodeURIComponent(nombre)}`;
+
+  const sql = `
+    UPDATE productos
+    SET nombre = ?, descripcion = ?, precio = ?, existencias = ?, imagen = ?, categoria_id = ?
+    WHERE id = ?
+  `;
+
+  db.run(sql, [nombre, descripcion || '', Number(precio), Number(existencias), imgFinal, Number(categoria_id), req.params.id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al actualizar producto' });
+    }
+    res.json({ actualizado: true });
+  });
+});
+
+// Eliminar producto
+app.delete('/api/productos/:id', (req, res) => {
+  db.run('DELETE FROM productos WHERE id = ?', [req.params.id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al eliminar producto' });
+    }
+    res.json({ eliminado: true });
+  });
+});
+
 // Registrar un nuevo pedido y descontar inventario
 app.post('/api/pedidos', (req, res) => {
   const { usuario_id, nombre_cliente, telefono, notas, total, articulos } = req.body;
