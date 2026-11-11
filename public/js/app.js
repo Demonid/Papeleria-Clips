@@ -29,6 +29,10 @@ createApp({
         telefono: '',
         notas: ''
       },
+      formCategoria: {
+        id: null,
+        nombre: ''
+      },
       pedidoConfirmado: null,
       misPedidos: [],
       pedidoDetalleVisible: null,
@@ -37,6 +41,9 @@ createApp({
     };
   },
   computed: {
+    esAdmin() {
+      return this.usuarioActual && this.usuarioActual.rol === 'admin';
+    },
     nombreCategoriaActiva() {
       const cat = this.categorias.find(c => c.id === this.categoriaActiva);
       return cat ? cat.nombre : '';
@@ -46,6 +53,9 @@ createApp({
     },
     totalArticulosCarrito() {
       return this.carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    },
+    productosStockBajo() {
+      return this.productos.filter(p => p.existencias <= 10).length;
     }
   },
   mounted() {
@@ -205,6 +215,48 @@ createApp({
         console.error('Error al consultar mis pedidos:', error);
       }
     },
+    contarProductosPorCategoria(categoriaId) {
+      return this.productos.filter(p => p.categoria_id === categoriaId).length;
+    },
+    editarCategoria(cat) {
+      this.formCategoria = { id: cat.id, nombre: cat.nombre };
+    },
+    cancelarEdicionCategoria() {
+      this.formCategoria = { id: null, nombre: '' };
+    },
+    async guardarCategoria() {
+      try {
+        const esEdicion = Boolean(this.formCategoria.id);
+        const url = esEdicion ? `/api/categorias/${this.formCategoria.id}` : '/api/categorias';
+        const metodo = esEdicion ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+          method: metodo,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre: this.formCategoria.nombre })
+        });
+
+        if (res.ok) {
+          this.formCategoria = { id: null, nombre: '' };
+          await this.cargarCategorias();
+          await this.cargarProductosIniciales();
+          this.mostrarAlerta(esEdicion ? 'Categoría actualizada.' : 'Categoría agregada.');
+        }
+      } catch (error) {
+        this.mensajeError = 'Error al guardar la categoría';
+      }
+    },
+    async eliminarCategoria(id) {
+      try {
+        const res = await fetch(`/api/categorias/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          await this.cargarCategorias();
+          this.mostrarAlerta('Categoría eliminada.');
+        }
+      } catch (error) {
+        this.mensajeError = 'Error al eliminar la categoría';
+      }
+    },
     async iniciarSesion() {
       this.mensajeError = '';
       try {
@@ -223,7 +275,12 @@ createApp({
         this.usuarioActual = data;
         this.formLogin = { correo: '', password: '' };
         this.mostrarAlerta(`Bienvenido, ${data.nombre}`);
-        this.vistaActual = this.carrito.length > 0 ? 'carrito' : 'inicio';
+
+        if (data.rol === 'admin') {
+          this.vistaActual = 'admin-panel';
+        } else {
+          this.vistaActual = this.carrito.length > 0 ? 'carrito' : 'inicio';
+        }
       } catch (error) {
         this.mensajeError = 'No se pudo conectar con el servidor';
       }

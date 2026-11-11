@@ -57,6 +57,46 @@ app.get('/api/categorias', (req, res) => {
   });
 });
 
+// Crear categoria
+app.post('/api/categorias', (req, res) => {
+  const { nombre } = req.body;
+  if (!nombre || !nombre.trim()) {
+    return res.status(400).json({ error: 'El nombre de la categoria es obligatorio' });
+  }
+
+  db.run('INSERT INTO categorias (nombre) VALUES (?)', [nombre.trim()], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al guardar categoria' });
+    }
+    res.json({ id: this.lastID, nombre: nombre.trim() });
+  });
+});
+
+// Actualizar categoria
+app.put('/api/categorias/:id', (req, res) => {
+  const { nombre } = req.body;
+  if (!nombre || !nombre.trim()) {
+    return res.status(400).json({ error: 'El nombre de la categoria es obligatorio' });
+  }
+
+  db.run('UPDATE categorias SET nombre = ? WHERE id = ?', [nombre.trim(), req.params.id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al actualizar categoria' });
+    }
+    res.json({ id: Number(req.params.id), nombre: nombre.trim() });
+  });
+});
+
+// Eliminar categoria
+app.delete('/api/categorias/:id', (req, res) => {
+  db.run('DELETE FROM categorias WHERE id = ?', [req.params.id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al eliminar categoria' });
+    }
+    res.json({ eliminado: true });
+  });
+});
+
 // Obtener lista de productos con filtro opcional de busqueda y categoria
 app.get('/api/productos', (req, res) => {
   const { busqueda, categoria_id } = req.query;
