@@ -188,6 +188,18 @@ app.put('/api/productos/:id', (req, res) => {
   });
 });
 
+// Actualizar únicamente existencias de inventario
+app.put('/api/productos/:id/inventario', (req, res) => {
+  const existencias = Math.max(0, Number(req.body.existencias) || 0);
+
+  db.run('UPDATE productos SET existencias = ? WHERE id = ?', [existencias, req.params.id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al actualizar existencias' });
+    }
+    res.json({ id: Number(req.params.id), existencias });
+  });
+});
+
 // Eliminar producto
 app.delete('/api/productos/:id', (req, res) => {
   db.run('DELETE FROM productos WHERE id = ?', [req.params.id], function (err) {

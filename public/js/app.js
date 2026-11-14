@@ -45,6 +45,7 @@ createApp({
       pedidoConfirmado: null,
       misPedidos: [],
       pedidoDetalleVisible: null,
+      filtroInventario: '',
       mensajeAlerta: '',
       mensajeError: ''
     };
@@ -65,6 +66,14 @@ createApp({
     },
     productosStockBajo() {
       return this.productos.filter(p => p.existencias <= 10).length;
+    },
+    productosInventarioFiltrados() {
+      const texto = this.filtroInventario.trim().toLowerCase();
+      if (!texto) return this.productos;
+      return this.productos.filter(p =>
+        p.nombre.toLowerCase().includes(texto) ||
+        (p.categoria && p.categoria.toLowerCase().includes(texto))
+      );
     }
   },
   mounted() {
@@ -318,6 +327,21 @@ createApp({
         }
       } catch (error) {
         this.mensajeError = 'Error al eliminar el producto';
+      }
+    },
+    async actualizarStockProducto(prod) {
+      try {
+        const res = await fetch(`/api/productos/${prod.id}/inventario`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ existencias: prod.existencias })
+        });
+        if (res.ok) {
+          await this.cargarProductosIniciales();
+          this.mostrarAlerta(`Inventario actualizado para "${prod.nombre}".`);
+        }
+      } catch (error) {
+        this.mensajeError = 'Error al actualizar existencias';
       }
     },
     async iniciarSesion() {
