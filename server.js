@@ -280,6 +280,45 @@ app.get('/api/mis-pedidos/:usuario_id', (req, res) => {
   });
 });
 
+// Obtener todos los pedidos para el panel administrativo
+app.get('/api/pedidos', (req, res) => {
+  db.all('SELECT * FROM pedidos ORDER BY id DESC', [], (err, pedidos) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al consultar pedidos' });
+    }
+    if (pedidos.length === 0) {
+      return res.json([]);
+    }
+
+    db.all('SELECT * FROM detalle_pedidos', [], (err2, detalles) => {
+      if (err2) {
+        return res.status(500).json({ error: 'Error al consultar detalle de pedidos' });
+      }
+
+      const resultado = pedidos.map(p => ({
+        ...p,
+        articulos: detalles.filter(d => d.pedido_id === p.id)
+      }));
+      res.json(resultado);
+    });
+  });
+});
+
+// Actualizar estado de un pedido
+app.put('/api/pedidos/:id/estado', (req, res) => {
+  const { estado } = req.body;
+  if (!estado) {
+    return res.status(400).json({ error: 'El estado es obligatorio' });
+  }
+
+  db.run('UPDATE pedidos SET estado = ? WHERE id = ?', [estado, req.params.id], function (err) {
+    if (err) {
+      return res.status(500).json({ error: 'Error al actualizar el estado del pedido' });
+    }
+    res.json({ id: Number(req.params.id), estado });
+  });
+});
+
 // Ruta principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

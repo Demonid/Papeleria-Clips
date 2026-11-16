@@ -528,8 +528,8 @@
           </div>
           <div class="col-6 col-md-3">
             <div class="card shadow-sm text-center p-3">
-              <span class="text-muted small">Disponibles</span>
-              <span class="fs-2 fw-bold text-success">{{ productos.filter(p => p.existencias > 0).length }}</span>
+              <span class="text-muted small">Pedidos Pendientes</span>
+              <span class="fs-2 fw-bold text-warning">{{ pedidosPendientesCount }}</span>
             </div>
           </div>
         </div>
@@ -585,7 +585,7 @@
                   <h5 class="card-title mb-1">Consulta y gestión de pedidos</h5>
                   <p class="card-text text-muted small mb-0">Revisar los pedidos registrados y actualizar su estado.</p>
                 </div>
-                <button class="btn btn-outline-primary btn-sm" @click="cambiarVista('admin-pedidos')">
+                <button class="btn btn-outline-primary btn-sm" @click="abrirAdminPedidos">
                   Abrir &rarr;
                 </button>
               </div>
@@ -810,6 +810,115 @@
                     </div>
                   </td>
                 </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vista: Consulta y gestion de pedidos -->
+      <section v-if="vistaActual === 'admin-pedidos' && esAdmin">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <h2 class="mb-0">Consulta y gestión de pedidos</h2>
+          <button class="btn btn-outline-secondary btn-sm" @click="cambiarVista('admin-panel')">
+            &larr; Volver al panel
+          </button>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <button
+            class="btn btn-sm"
+            :class="filtroEstadoPedido === '' ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="filtroEstadoPedido = ''"
+          >
+            Todos
+          </button>
+          <button
+            v-for="est in ['Pendiente', 'Listo para recoger', 'Entregado', 'Cancelado']"
+            :key="est"
+            class="btn btn-sm"
+            :class="filtroEstadoPedido === est ? 'btn-primary' : 'btn-outline-secondary'"
+            @click="filtroEstadoPedido = est"
+          >
+            {{ est }}
+          </button>
+        </div>
+
+        <div v-if="pedidosAdminFiltrados.length === 0" class="alert alert-info">
+          No hay pedidos registrados con ese criterio.
+        </div>
+
+        <div v-else class="card shadow-sm">
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Folio</th>
+                  <th>Cliente</th>
+                  <th>Teléfono</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                  <th>Estado actual</th>
+                  <th style="width: 240px;">Cambiar estado</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template v-for="pedido in pedidosAdminFiltrados" :key="pedido.id">
+                  <tr>
+                    <td class="fw-semibold">#PED-{{ String(pedido.id).padStart(4, '0') }}</td>
+                    <td>{{ pedido.nombre_cliente }}</td>
+                    <td>{{ pedido.telefono }}</td>
+                    <td>{{ pedido.fecha }}</td>
+                    <td class="fw-semibold">${{ Number(pedido.total).toFixed(2) }}</td>
+                    <td>
+                      <span
+                        class="badge"
+                        :class="{
+                          'bg-warning text-dark': pedido.estado === 'Pendiente',
+                          'bg-info text-dark': pedido.estado === 'Listo para recoger',
+                          'bg-success': pedido.estado === 'Entregado',
+                          'bg-danger': pedido.estado === 'Cancelado'
+                        }"
+                      >
+                        {{ pedido.estado }}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <select class="form-select" v-model="pedido.estado">
+                          <option value="Pendiente">Pendiente</option>
+                          <option value="Listo para recoger">Listo para recoger</option>
+                          <option value="Entregado">Entregado</option>
+                          <option value="Cancelado">Cancelado</option>
+                        </select>
+                        <button class="btn btn-primary" type="button" @click="actualizarEstadoPedido(pedido)">
+                          Guardar
+                        </button>
+                      </div>
+                    </td>
+                    <td>
+                      <button class="btn btn-outline-primary btn-sm" @click="pedidoDetalleVisible = pedidoDetalleVisible === pedido.id ? null : pedido.id">
+                        {{ pedidoDetalleVisible === pedido.id ? 'Ocultar' : 'Ver detalle' }}
+                      </button>
+                    </td>
+                  </tr>
+                  <tr v-if="pedidoDetalleVisible === pedido.id" class="bg-light">
+                    <td colspan="8" class="p-3">
+                      <div class="small">
+                        <strong>Artículos solicitados:</strong>
+                        <ul class="mb-1 mt-1">
+                          <li v-for="art in pedido.articulos" :key="art.id">
+                            {{ art.cantidad }}x {{ art.nombre_producto }} — ${{ (art.precio * art.cantidad).toFixed(2) }}
+                          </li>
+                        </ul>
+                        <div v-if="pedido.notas" class="text-muted">
+                          <strong>Notas del cliente:</strong> {{ pedido.notas }}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
               </tbody>
             </table>
           </div>

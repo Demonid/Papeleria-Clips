@@ -44,6 +44,8 @@ createApp({
       },
       pedidoConfirmado: null,
       misPedidos: [],
+      todosLosPedidos: [],
+      filtroEstadoPedido: '',
       pedidoDetalleVisible: null,
       filtroInventario: '',
       mensajeAlerta: '',
@@ -67,6 +69,13 @@ createApp({
     productosStockBajo() {
       return this.productos.filter(p => p.existencias <= 10).length;
     },
+    pedidosPendientesCount() {
+      return this.todosLosPedidos.filter(p => p.estado === 'Pendiente').length;
+    },
+    pedidosAdminFiltrados() {
+      if (!this.filtroEstadoPedido) return this.todosLosPedidos;
+      return this.todosLosPedidos.filter(p => p.estado === this.filtroEstadoPedido);
+    },
     productosInventarioFiltrados() {
       const texto = this.filtroInventario.trim().toLowerCase();
       if (!texto) return this.productos;
@@ -83,6 +92,9 @@ createApp({
   methods: {
     cambiarVista(vista) {
       this.mensajeError = '';
+      if (vista === 'admin-panel' || vista === 'admin-pedidos') {
+        this.cargarTodosLosPedidos();
+      }
       this.vistaActual = vista;
     },
     irInicio() {
@@ -344,6 +356,34 @@ createApp({
         this.mensajeError = 'Error al actualizar existencias';
       }
     },
+    async cargarTodosLosPedidos() {
+      try {
+        const res = await fetch('/api/pedidos');
+        this.todosLosPedidos = await res.json();
+      } catch (error) {
+        console.error('Error al cargar todos los pedidos:', error);
+      }
+    },
+    async abrirAdminPedidos() {
+      this.pedidoDetalleVisible = null;
+      await this.cargarTodosLosPedidos();
+      this.vistaActual = 'admin-pedidos';
+    },
+    async actualizarEstadoPedido(pedido) {
+      try {
+        const res = await fetch(`/api/pedidos/${pedido.id}/estado`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ estado: pedido.estado })
+        });
+        if (res.ok) {
+          await this.cargarTodosLosPedidos();
+          this.mostrarAlerta(`Estado del pedido #PED-${String(pedido.id).padStart(4, '0')} actualizado.`);
+        }
+      } catch (error) {
+        this.mensajeError = 'Error al actualizar el estado del pedido';
+      }
+    },
     async iniciarSesion() {
       this.mensajeError = '';
       try {
@@ -364,6 +404,7 @@ createApp({
         this.mostrarAlerta(`Bienvenido, ${data.nombre}`);
 
         if (data.rol === 'admin') {
+          await this.cargarTodosLosPedidos();
           this.vistaActual = 'admin-panel';
         } else {
           this.vistaActual = this.carrito.length > 0 ? 'carrito' : 'inicio';
