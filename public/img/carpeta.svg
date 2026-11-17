@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#e0f7fa"/>
+    <ellipse cx="200" cy="245" rx="85" ry="10" fill="#b2ebf2"/>
+    <!-- Carpeta abierta/cerrada -->
+    <rect x="115" y="35" width="170" height="205" rx="8" fill="#ffffff" stroke="#00838f" stroke-width="4"/>
+    <!-- Lomo -->
+    <rect x="115" y="35" width="34" height="205" rx="4" fill="#00acc1" stroke="#00838f" stroke-width="4"/>
+    <!-- Orificio de dedo en lomo -->
+    <circle cx="132" cy="195" r="8" fill="#e0f7fa" stroke="#00838f" stroke-width="2"/>
+    <!-- Etiqueta lomo -->
+    <rect x="122" y="60" width="20" height="75" rx="3" fill="#ffffff"/>
+    <!-- 3 Argollas metalicas -->
+    <g fill="none" stroke="#78909c" stroke-width="4">
+      <circle cx="165" cy="75" r="10"/>
+      <circle cx="165" cy="138" r="10"/>
+      <circle cx="165" cy="200" r="10"/>
+    </g>
+    <!-- Ventana portada -->
+    <rect x="190" y="70" width="75" height="95" rx="4" fill="#e0f7fa" stroke="#80deea" stroke-width="2"/>
+    <line x1="202" y1="95" x2="252" y2="95" stroke="#00838f" stroke-width="4" stroke-linecap="round"/>
+    <line x1="202" y1="115" x2="242" y2="115" stroke="#4dd0e1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="202" y1="132" x2="248" y2="132" stroke="#4dd0e1" stroke-width="3" stroke-linecap="round"/>
+  </svg>

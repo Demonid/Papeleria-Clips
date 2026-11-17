@@ -152,7 +152,7 @@ app.post('/api/productos', (req, res) => {
   const { nombre, descripcion, precio, existencias, imagen, categoria_id } = req.body;
   const imgFinal = imagen && imagen.trim() !== ''
     ? imagen.trim()
-    : `https://placehold.co/400x280/e3f2fd/1565c0?text=${encodeURIComponent(nombre)}`;
+    : '/img/default.svg';
 
   const sql = `
     INSERT INTO productos (nombre, descripcion, precio, existencias, imagen, categoria_id)
@@ -172,7 +172,7 @@ app.put('/api/productos/:id', (req, res) => {
   const { nombre, descripcion, precio, existencias, imagen, categoria_id } = req.body;
   const imgFinal = imagen && imagen.trim() !== ''
     ? imagen.trim()
-    : `https://placehold.co/400x280/e3f2fd/1565c0?text=${encodeURIComponent(nombre)}`;
+    : '/img/default.svg';
 
   const sql = `
     UPDATE productos

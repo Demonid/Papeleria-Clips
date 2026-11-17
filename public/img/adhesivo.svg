@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#fff8e1"/>
+    <ellipse cx="200" cy="242" rx="60" ry="10" fill="#ffecb3"/>
+    <!-- Barra de pegamento -->
+    <!-- Tapa superior / pegamento asomando -->
+    <rect x="168" y="42" width="64" height="28" rx="8" fill="#fffde7" stroke="#fbc02d" stroke-width="2"/>
+    <!-- Cuello -->
+    <rect x="162" y="65" width="76" height="16" rx="3" fill="#f57f17"/>
+    <!-- Cuerpo cilindrico -->
+    <rect x="158" y="80" width="84" height="130" rx="6" fill="#ffb300"/>
+    <!-- Etiqueta blanca -->
+    <rect x="158" y="102" width="84" height="78" fill="#ffffff"/>
+    <text x="200" y="138" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#e65100" text-anchor="middle">ADHESIVO</text>
+    <text x="200" y="158" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#fbc02d" text-anchor="middle">40 g</text>
+    <!-- Rueda inferior -->
+    <rect x="155" y="210" width="90" height="22" rx="6" fill="#e65100"/>
+    <g stroke="#ffe082" stroke-width="2">
+      <line x1="168" y1="212" x2="168" y2="230"/>
+      <line x1="180" y1="212" x2="180" y2="230"/>
+      <line x1="192" y1="212" x2="192" y2="230"/>
+      <line x1="204" y1="212" x2="204" y2="230"/>
+      <line x1="216" y1="212" x2="216" y2="230"/>
+      <line x1="228" y1="212" x2="228" y2="230"/>
+    </g>
+  </svg>

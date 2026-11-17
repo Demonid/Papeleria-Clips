@@ -91,7 +91,7 @@ db.serialize(() => {
         'Cuaderno cosido tamaño profesional con 100 hojas de raya y pasta dura.',
         45.00,
         30,
-        'https://placehold.co/400x280/e3f2fd/1565c0?text=Cuaderno+Profesional',
+        '/img/cuaderno.svg',
         3
       ],
       [
@@ -99,7 +99,7 @@ db.serialize(() => {
         'Resma de 500 hojas blancas tamaño carta de alta blancura para impresión y copiado.',
         135.00,
         20,
-        'https://placehold.co/400x280/f5f5f5/424242?text=Hojas+Blancas+Carta',
+        '/img/hojas.svg',
         3
       ],
       [
@@ -107,7 +107,7 @@ db.serialize(() => {
         'Clips estándar número 1 resistentes a la oxidación para sujetar documentos.',
         18.00,
         50,
-        'https://placehold.co/400x280/fff3e0/e65100?text=Caja+de+Clips',
+        '/img/clips.svg',
         2
       ],
       [
@@ -115,7 +115,7 @@ db.serialize(() => {
         'Pluma de tinta negra de secado rápido y escritura suave.',
         8.00,
         100,
-        'https://placehold.co/400x280/eceff1/263238?text=Boligrafo+Negro',
+        '/img/boligrafo.svg',
         1
       ],
       [
@@ -123,7 +123,7 @@ db.serialize(() => {
         'Incluye regla de 30 cm, dos escuadras, transportador y compás escolar.',
         38.00,
         15,
-        'https://placehold.co/400x280/e8f5e9/2e7d32?text=Juego+de+Geometria',
+        '/img/geometria.svg',
         1
       ],
       [
@@ -131,7 +131,7 @@ db.serialize(() => {
         'Carpeta tamaño carta de 1 pulgada con cubiertas plásticas transparentes.',
         65.00,
         12,
-        'https://placehold.co/400x280/e0f7fa/006064?text=Carpeta+Argollas',
+        '/img/carpeta.svg',
         2
       ],
       [
@@ -139,7 +139,7 @@ db.serialize(() => {
         'Pegamento en barra lavable y no tóxico para papel, cartulina y fotos.',
         28.00,
         35,
-        'https://placehold.co/400x280/fff8e1/f57f17?text=Lapiz+Adhesivo',
+        '/img/adhesivo.svg',
         1
       ],
       [
@@ -147,7 +147,7 @@ db.serialize(() => {
         'Colores largos de mina resistente y tonos intensos para dibujo escolar.',
         55.00,
         25,
-        'https://placehold.co/400x280/fce4ec/c2185b?text=Colores+de+Madera',
+        '/img/colores.svg',
         4
       ],
       [
@@ -155,7 +155,7 @@ db.serialize(() => {
         'Engrapadora de media tira con capacidad para engrapar hasta 20 hojas.',
         95.00,
         10,
-        'https://placehold.co/400x280/ede7f6/4527a0?text=Engrapadora',
+        '/img/engrapadora.svg',
         2
       ],
       [
@@ -163,7 +163,7 @@ db.serialize(() => {
         'Resaltador de punta cincel para subrayar textos en todo tipo de papel.',
         15.00,
         40,
-        'https://placehold.co/400x280/fffde7/fbc02d?text=Marcatextos',
+        '/img/marcatextos.svg',
         1
       ],
       [
@@ -171,7 +171,7 @@ db.serialize(() => {
         'Estuche de plástico con 12 pastillas de acuarela y pincel incluido.',
         42.00,
         18,
-        'https://placehold.co/400x280/f3e5f5/6a1b9a?text=Acuarelas+12+Colores',
+        '/img/acuarelas.svg',
         4
       ],
       [
@@ -179,7 +179,7 @@ db.serialize(() => {
         'Block con 100 hojas adhesivas amarillas para recordatorios y apuntes rápidos.',
         22.00,
         45,
-        'https://placehold.co/400x280/fff9c4/f9a825?text=Notas+Adhesivas',
+        '/img/notas.svg',
         2
       ]
     ];
@@ -191,6 +191,25 @@ db.serialize(() => {
 
     productos.forEach(p => stmtProd.run(p));
     stmtProd.finalize();
+  });
+
+  // Actualizar rutas de imagenes locales si existen registros con enlaces antiguos
+  const imagenesLocales = [
+    [1, '/img/cuaderno.svg'],
+    [2, '/img/hojas.svg'],
+    [3, '/img/clips.svg'],
+    [4, '/img/boligrafo.svg'],
+    [5, '/img/geometria.svg'],
+    [6, '/img/carpeta.svg'],
+    [7, '/img/adhesivo.svg'],
+    [8, '/img/colores.svg'],
+    [9, '/img/engrapadora.svg'],
+    [10, '/img/marcatextos.svg'],
+    [11, '/img/acuarelas.svg'],
+    [12, '/img/notas.svg']
+  ];
+  imagenesLocales.forEach(([id, ruta]) => {
+    db.run("UPDATE productos SET imagen = ? WHERE id = ? AND imagen LIKE 'https://placehold.co%'", [ruta, id]);
   });
 });
 

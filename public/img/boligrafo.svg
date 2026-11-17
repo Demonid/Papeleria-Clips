@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#eceff1"/>
+    <ellipse cx="200" cy="235" rx="110" ry="10" fill="#cfd8dc"/>
+    <!-- Trazo de tinta -->
+    <path d="M95 215 Q145 190 190 212 T290 205" fill="none" stroke="#263238" stroke-width="4" stroke-linecap="round"/>
+    <!-- Boligrafo inclinado -->
+    <g transform="translate(200, 125) rotate(-35)">
+      <!-- Cuerpo -->
+      <rect x="-110" y="-12" width="180" height="24" rx="4" fill="#37474f"/>
+      <!-- Grip -->
+      <rect x="-110" y="-12" width="45" height="24" rx="2" fill="#263238"/>
+      <line x1="-98" y1="-12" x2="-98" y2="12" stroke="#546e7a" stroke-width="2"/>
+      <line x1="-88" y1="-12" x2="-88" y2="12" stroke="#546e7a" stroke-width="2"/>
+      <line x1="-78" y1="-12" x2="-78" y2="12" stroke="#546e7a" stroke-width="2"/>
+      <!-- Punta cono -->
+      <polygon points="-110,-12 -142,0 -110,12" fill="#cfd8dc"/>
+      <!-- Punta esfera -->
+      <polygon points="-142,0 -150,-2 -150,2" fill="#263238"/>
+      <!-- Clip metalico y boton -->
+      <rect x="70" y="-9" width="16" height="18" rx="3" fill="#b0bec5"/>
+      <rect x="86" y="-6" width="12" height="12" rx="3" fill="#263238"/>
+      <path d="M68 -12 V-20 H15 V-15" fill="none" stroke="#90a4ae" stroke-width="4" stroke-linecap="round"/>
+      <!-- Ventana nivel tinta -->
+      <rect x="-50" y="-4" width="95" height="8" rx="4" fill="#b0bec5"/>
+    </g>
+  </svg>
