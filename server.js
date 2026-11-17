@@ -3,7 +3,7 @@ const path = require('path');
 const db = require('./db');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware para JSON y archivos estaticos
 app.use(express.json());
