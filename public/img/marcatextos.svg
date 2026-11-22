@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#fffde7"/>
+    <!-- Trazo fluorescente -->
+    <rect x="75" y="195" width="240" height="28" rx="4" fill="#ffff00" opacity="0.75"/>
+    <!-- Marcatextos inclinado -->
+    <g transform="translate(205, 118) rotate(-25)">
+      <!-- Cuerpo ancho -->
+      <rect x="-95" y="-24" width="165" height="48" rx="10" fill="#fdd835" stroke="#f9a825" stroke-width="3"/>
+      <!-- Etiqueta -->
+      <rect x="-55" y="-14" width="95" height="28" rx="5" fill="#ffffff"/>
+      <text x="-7" y="5" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#f57f17" text-anchor="middle">RESALTADOR</text>
+      <!-- Boquilla negra -->
+      <polygon points="-95,-18 -122,-10 -122,10 -95,18" fill="#37474f"/>
+      <!-- Punta cincel amarilla -->
+      <polygon points="-122,-8 -142,-12 -142,6 -122,8" fill="#ffff00" stroke="#fbc02d" stroke-width="2"/>
+      <!-- Tapa trasera -->
+      <rect x="70" y="-22" width="22" height="44" rx="6" fill="#f57f17"/>
+    </g>
+  </svg>

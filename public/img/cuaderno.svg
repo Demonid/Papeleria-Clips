@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#e3f2fd"/>
+    <ellipse cx="205" cy="245" rx="75" ry="10" fill="#bbdefb"/>
+    <!-- Cubierta trasera -->
+    <rect x="135" y="38" width="145" height="200" rx="8" fill="#0d47a1"/>
+    <!-- Hojas -->
+    <rect x="132" y="42" width="143" height="192" rx="4" fill="#ffffff"/>
+    <!-- Cubierta delantera -->
+    <rect x="128" y="40" width="142" height="196" rx="8" fill="#1976d2"/>
+    <rect x="128" y="40" width="22" height="196" fill="#1565c0"/>
+    <!-- Etiqueta -->
+    <rect x="165" y="75" width="85" height="50" rx="5" fill="#ffffff"/>
+    <line x1="175" y1="92" x2="240" y2="92" stroke="#90caf9" stroke-width="3" stroke-linecap="round"/>
+    <line x1="175" y1="108" x2="225" y2="108" stroke="#90caf9" stroke-width="3" stroke-linecap="round"/>
+    <!-- Espiral -->
+    <g stroke="#cfd8dc" stroke-width="4" stroke-linecap="round" fill="none">
+      <path d="M120 55 H136 M120 75 H136 M120 95 H136 M120 115 H136 M120 135 H136 M120 155 H136 M120 175 H136 M120 195 H136 M120 215 H136"/>
+    </g>
+  </svg>

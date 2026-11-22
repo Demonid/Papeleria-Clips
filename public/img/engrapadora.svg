@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#ede7f6"/>
+    <ellipse cx="200" cy="228" rx="125" ry="12" fill="#d1c4e9"/>
+    <!-- Base inferior -->
+    <rect x="85" y="195" width="230" height="22" rx="8" fill="#311b92"/>
+    <!-- Yunque metalico -->
+    <rect x="100" y="188" width="45" height="7" rx="2" fill="#b0bec5"/>
+    <!-- Bisagra trasera -->
+    <rect x="275" y="140" width="28" height="58" rx="6" fill="#4527a0"/>
+    <circle cx="289" cy="155" r="5" fill="#cfd8dc"/>
+    <!-- Riel de grapas metalico -->
+    <g transform="rotate(-10 285 155)">
+      <rect x="95" y="135" width="195" height="16" rx="3" fill="#90a4ae"/>
+      <!-- Brazo superior -->
+      <path d="M90 138 L95 102 Q100 95 115 95 L295 115 Q305 118 302 138 Z" fill="#5e35b1"/>
+      <path d="M90 120 L155 120 L155 98 L110 96 Q95 96 90 120 Z" fill="#311b92"/>
+    </g>
+    <!-- Grapas sueltas decorativas -->
+    <path d="M115 245 V235 H145 V245" fill="none" stroke="#546e7a" stroke-width="3"/>
+    <path d="M160 245 V235 H190 V245" fill="none" stroke="#546e7a" stroke-width="3"/>
+  </svg>

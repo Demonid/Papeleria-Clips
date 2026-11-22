@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 280" width="400" height="280">
+    <rect width="400" height="280" fill="#fce4ec"/>
+    <!-- Lapices de colores alineados -->
+    <g transform="translate(80, 45)">
+      <!-- Rojo -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#e53935"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#e53935"/>
+      </g>
+      <!-- Naranja -->
+      <g transform="translate(36, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#fb8c00"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#fb8c00"/>
+      </g>
+      <!-- Amarillo -->
+      <g transform="translate(72, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#fdd835"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#fdd835"/>
+      </g>
+      <!-- Verde -->
+      <g transform="translate(108, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#43a047"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#43a047"/>
+      </g>
+      <!-- Azul -->
+      <g transform="translate(144, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#1e88e5"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#1e88e5"/>
+      </g>
+      <!-- Morado -->
+      <g transform="translate(180, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#8e24aa"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#8e24aa"/>
+      </g>
+      <!-- Rosa -->
+      <g transform="translate(216, 0)">
+        <rect x="0" y="35" width="28" height="160" fill="#d81b60"/>
+        <polygon points="0,35 14,5 28,35" fill="#ffe0b2"/>
+        <polygon points="9,15 14,5 19,15" fill="#d81b60"/>
+      </g>
+    </g>
+    <!-- Caja frontal -->
+    <rect x="72" y="155" width="260" height="90" rx="8" fill="#ad1457"/>
+    <rect x="92" y="172" width="220" height="56" rx="6" fill="#ffffff"/>
+    <text x="202" y="198" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ad1457" text-anchor="middle">12 COLORES</text>
+    <text x="202" y="216" font-family="Arial, sans-serif" font-size="12" fill="#757575" text-anchor="middle">MADERA DE ALTA CALIDAD</text>
+  </svg>
